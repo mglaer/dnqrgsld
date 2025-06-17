@@ -1,0 +1,55 @@
+div {
+    padding-top: 2rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+td {
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.custom-edit-icon {
+    color: darkred;
+    font-size: 18px;
+}
+
+div {
+    height: 100vh;
+    overflow-y: auto; 
+}

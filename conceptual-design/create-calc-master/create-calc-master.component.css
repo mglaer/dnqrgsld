@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+  }
+
+  .content {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mat-row:hover .mat-cell {
+    background-color: lightgray;
+    cursor: pointer;
+  }
+
+  .full-width-field {
+    width: 100%;
+ }
+
+ div.scroll {
+  margin: 0px, 0px;
+  padding: 0px;
+  /*background-color: #08c708;*/
+  /*width: 350px;*/
+  max-height: 280px;
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+}

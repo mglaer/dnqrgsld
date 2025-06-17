@@ -1,0 +1,56 @@
+<as-split direction="vertical">
+    <as-split-area [size]="50">
+
+
+        <h1>
+            <fa-icon [icon]="faLayerGroup"></fa-icon>Группы
+        </h1>
+
+
+        <hr>
+
+        <button mat-raised-button color="primary" (click)="treeSelectorGroups.treeControl.collapseAll()">
+            <mat-icon class="mat-icon-rtl-mirror">
+                expand_less
+            </mat-icon>Свернуть всё</button>
+        <button mat-raised-button color="accent" (click)="treeSelectorGroups.treeControl.expandAll()">
+            <mat-icon class="mat-icon-rtl-mirror">
+                expand_more
+            </mat-icon>развернуть всё</button>
+
+        <mat-tree #treeSelectorGroups [dataSource]="dataSource" [treeControl]="treeControl">
+            <!-- This is the tree node template for leaf nodes
+            style="background-color: grey;"
+            -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding style="cursor: pointer;" [ngStyle]="{'background-color': (node.ID===selected_row.ID) ? 'Lavender' : 'white' }"
+                (click)="click_up_tree(node)">
+                <!-- use a disabled button to provide padding for tree leaf -->
+                <button mat-icon-button disabled></button>
+                {{node.name}}
+            </mat-tree-node>
+            <!-- This is the tree node template for expandable nodes -->
+            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding style="cursor: pointer;" [ngStyle]="{'background-color': (node.ID===selected_row.ID) ? 'Lavender' : 'white' }"
+                (click)="click_up_tree(node)">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"
+                    (click)="click_up_node(node)">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                </button>
+                {{node.name}}
+            </mat-tree-node>
+        </mat-tree>
+        <!---->
+
+    </as-split-area>
+
+    <as-split-area [size]="50" *ngIf="down_page_mode=='Groups'">
+
+        <app-groups-table [ID]="custom_group"></app-groups-table>
+    </as-split-area>
+
+    <as-split-area [size]="50" *ngIf="down_page_mode=='Users'">
+
+        <app-users-table [ID]="custom_user"></app-users-table>
+    </as-split-area>
+</as-split>

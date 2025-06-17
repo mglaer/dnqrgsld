@@ -1,0 +1,17 @@
+<h1 mat-header>
+    Подбор стенда {{ds | date:'dd.MM.yyyy'}} - {{de| date:'dd.MM.yyyy'}}</h1>
+<mat-form-field [formGroup]="form" appearance="fill">
+    <mat-label>Выбрать Стенд</mat-label>
+    <mat-select formControlName="stand">
+        <mat-option *ngFor="let stand of stages_gant_select" [value]="stand">{{stand.name }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<highcharts-chart [(update)]="updateFlag" [Highcharts]="Highcharts" [constructorType]="'ganttChart'" [options]="chartOptions">
+</highcharts-chart>
+
+
+<mat-dialog-actions>
+    <button style="margin-right:5.5rem;" class="mat-raised-button" (click)="close()">Закрыть</button>
+    <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="form.get('stand').value.ID === -1">Сохранить</button>
+</mat-dialog-actions>

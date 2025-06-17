@@ -1,0 +1,72 @@
+<div>
+    <button mat-raised-button color="primary" (click)="openAddProjectDialog()">
+        Создать проект
+    </button>
+
+    <table matSort mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+
+        <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ShortTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Краткое описание </th>
+            <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="SecurityLevel">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Уровень доступа </th>
+            <td mat-cell *matCellDef="let element"> {{element.SecurityLevel}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ArchiveSign">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Архивировано</th>
+            <td mat-cell *matCellDef="let element">
+                <label class="custom-checkbox-label">
+                    <input type="checkbox" [checked]="element.ArchiveSign" 
+                           (change)="archivate($event, element)" style="width: 30px; height: 18px;" 
+                           matTooltip="Архивировать элемент">
+                </label>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Редактирование</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon class="custom-edit-icon" (click)="openEditProjectDialog(element)" matTooltip="Редактировать элемент">edit</mat-icon>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <table>
+                        <tr>
+                            <td><strong>Описание</strong></td>
+                            <td>{{element.Description}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Исполнители</strong></td>
+                            <td>{{element.Executor}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Заказчик</strong></td>
+                            <td>{{element.Customer}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Срок реализации</strong></td>
+                            <td>{{element.StartDate | date:'dd.MM.yyyy' || date()}} - {{element.EndDate | date:'dd.MM.yyyy' || date()}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+</div>

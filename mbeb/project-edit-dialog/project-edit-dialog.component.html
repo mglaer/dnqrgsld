@@ -1,0 +1,66 @@
+<mat-tab-group>
+    <mat-tab label="Основные сведения">
+        <title mat-dialog-title>Редактирование проекта</title>
+        <mat-form-field [formGroup]="form" appearance="fill">
+            <mat-label>Уровень доступа</mat-label>
+            <mat-select formControlName="security_level">
+                <mat-option *ngFor="let security_level of security_levels" [value]="security_level">{{security_level.ShortTitle}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field [formGroup]="form" class="example-full-width">
+            <mat-label>Краткое описание</mat-label>
+            <input class="form-control" minlenght=1 formControlName="short_title" matInput placeholder="Short title" required>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field [formGroup]="form" class="example-full-width">
+            <mat-label>Исполнитель</mat-label>
+            <input formControlName="executor" matInput placeholder="Executor" required>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field [formGroup]="form" class="example-full-width">
+            <mat-label>Заказчик</mat-label>
+            <input formControlName="customer" matInput placeholder="Customer" required>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field [formGroup]="form" class="example-full-width">
+            <mat-label>Описание</mat-label>
+            <textarea cdkTextareaAutosize formControlName="description" matInput placeholder="Description" required></textarea>
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field appearance="fill">
+
+
+            <mat-label>Выбор дат</mat-label>
+            <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date" (input)="start">
+                <input matEndDate formControlName="end" placeholder="End date" (input)="end">
+            </mat-date-range-input>
+
+            <mat-hint>м/д/г – м/д/г</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+        </mat-form-field>
+
+        <br>
+        <mat-dialog-actions style="justify-content: flex-start;">
+            <button class="mat-raised-button mat-warn" (click)="close()">Закрыть</button>
+            <button class="mat-raised-button mat-primary" style="margin-left: 5px;" (click)="save()"
+                [disabled]="form.get('security_level').value.ID === -1 || form.get('short_title').value.length < 1 || form.get('executor').value.length < 1 || form.get('customer').value.length < 1 || form.get('description').value.length < 1 || !form.get('start').value || !form.get('end').value">
+                Сохранить
+            </button>
+        </mat-dialog-actions>
+        
+        
+    </mat-tab>
+    <mat-tab label=" Этапы испытаний ">
+        <stages [project_id]="project.ID "></stages>
+    </mat-tab>
+</mat-tab-group>

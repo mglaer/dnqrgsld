@@ -1,0 +1,114 @@
+<div style="height: 94vh;">
+
+
+    <div style="width: 99%; height: 100%;">
+
+        <form [formGroup]="calc_form" (ngSubmit)="onSubmit()" autocomplete="off">
+            <!--ShortTitle-->
+            <div class="form-group" class="row">
+                <div class="col-10">
+                    <label>Название</label>
+                    <input type="text" formControlName="ShortTitle" class="form-control" readonly>
+                </div>
+
+                <div class="col-2">
+                    <label>Статус</label>
+                    <input name="Status" formControlName="Status" class="form-control" readonly>
+                </div>
+            </div>
+
+            <!--Description-->
+            <div class="form-group">
+                <label>Описание</label>
+                <!--<input type="text" formControlName="Description" class="form-control" readonly>-->
+                <textarea name="Description" cols="40" rows="5" formControlName="Description" class="form-control"
+                    readonly></textarea>
+            </div>
+            <!--Module-->
+            <div class="form-group">
+                <label>Модуль</label>
+                <input name="Module" formControlName="Module" class="form-control" readonly>
+            </div>
+
+           
+              
+            <!--InOutFile-->
+            <div class="form-group">
+                <label>Данные</label>
+                <div class="scroll">
+                    <table class="table table-bordered">
+                        <!-- <th> -->
+                        <thead>
+                            <tr>
+                                <td class="text-center" *ngFor="let header of headers">
+                                    <b>{{header}}</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of records">
+                                <td *ngFor="let cell of row; let i = index" 
+                                    [ngStyle]="{
+                                        'background-color': 
+                                        (cell === minValues[i] && cell !== maxValues[i]) ? 'lightblue' :
+                                        (cell === maxValues[i] && cell !== minValues[i]) ? 'yellow' :
+                                        'transparent'
+                                    }">{{cell !== null ? cell : ''}}</td>
+                            </tr>
+                        </tbody>
+                        <!-- </th> -->
+                    </table>
+                </div>
+                <!--<input name="InOutFile" formControlName="InOutFile" class="form-control" readonly>-->
+            </div>
+            <!--Status
+            <div class="form-group">
+                <label>Статус</label>
+                <input name="Status" formControlName="Status" class="form-control" readonly>
+            </div>-->
+            <!--Path-->
+            <!--<div class="form-group">
+                <label>Путь</label>
+                <input name="Path" formControlName="Path" class="form-control" readonly>
+            </div>-->
+
+        </form>
+        <!------>
+
+        <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Select Variable 1</mat-label>
+              <mat-select (selectionChange)="onSelectionChange1($event)">
+                <mat-option *ngFor="let header of headers; let i = index" [value]="header + '_' + i">
+                  {{ header }} - {{ i + 1 }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Select Variable 2</mat-label>
+              <mat-select (selectionChange)="onSelectionChange2($event)">
+                <mat-option *ngFor="let header of headers; let i = index" [value]="header + '_' + i">
+                  {{ header }} - {{ i + 1 }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div style="display: block;" style="width: 100%">
+                <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [type]="'line'">
+                </canvas>
+              </div>
+         
+          <button mat-raised-button color="warn" (click)="exit()">Закрыть</button>
+    </div>
+
+
+
+
+</div>
+
+
+

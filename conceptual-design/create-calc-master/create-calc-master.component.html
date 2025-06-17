@@ -1,0 +1,161 @@
+<div style="height: 94vh;">
+
+
+    <div style="width: 100%; height: 100%;">
+        <h1>
+            Мастер создания расчетов
+        </h1>
+        <!--parent_id project={{parent_id}}-->
+
+        <mat-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+
+                <!---->
+                <mat-toolbar>
+                    <span class="full-width-field">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Выбор шаблона</ng-template>
+                            <mat-form-field appearance="fill" class="full-width-field">
+                                <input matInput formControlName="selected_module" placeholder="Выберите из списка"
+                                    required readonly>
+                            </mat-form-field>
+                        </form>
+                    </span>
+                    <span class="flexExpand"></span>
+                    <span>
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="show_archieved"
+                            (change)="GetTemplateList()">
+                            Показать архивные
+                        </mat-slide-toggle>
+                    </span>
+                </mat-toolbar>
+
+                <!---->
+                <table mat-table matSort [dataSource]="DataSourceTable" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="ID">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ShortTitle">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Название</th>
+                        <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+                    </ng-container>
+
+                    <!--<ng-container matColumnDef="Description">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Описание</th>
+                        <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
+                    </ng-container>-->
+
+                    <ng-container matColumnDef="SecurityLevel">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            <fa-icon [icon]="faShieldHalved"></fa-icon>
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.SecurityLevel}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ArchiveSign">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            <fa-icon [icon]="faBoxArchive"></fa-icon>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox disabled class="example-margin" [(ngModel)]="element.ArchiveSign">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div>
+                    <button mat-button (click)="exit()">Отмена</button>
+                    <button mat-button matStepperNext [disabled]="selected_module===undefined">Далее</button>
+                </div>
+            </mat-step>
+
+            <mat-step [stepControl]="calc_form" [editable]="isEditable">
+
+                <ng-template matStepLabel>Ввод параметров</ng-template>
+
+                <form [formGroup]="calc_form" (ngSubmit)="onSubmit()" autocomplete="off">
+                    <!--ShortTitle-->
+                    <div class="form-group">
+                        <label>Название</label>
+                        <input type="text" formControlName="ShortTitle" class="form-control">
+                    </div>
+                    <!--Description-->
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <textarea name="Description" cols="40" rows="5" formControlName="Description" class="form-control"></textarea>
+                    </div>
+                    <!--Module
+                    <div class="form-group">
+                        <label>Модуль</label>
+                        <input name="Module" formControlName="Module" class="form-control">
+                    </div>-->
+                    <!--InOutFile-->
+                    <div class="form-group">
+                        <label>Данные</label>
+                        <input class="form-control mb-5" type="file" class="upload"
+                            (change)="changeListener($event.target)">
+                        <div class="scroll">
+                            <table class="table table-bordered">
+                                <!-- <th> -->
+                                <thead>
+                                    <tr>
+                                        <td class="text-center" *ngFor="let header of headers">
+                                            <b>{{header}}</b>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of records">
+                                        <td class="text-center" *ngFor="let col of row">{{col}}</td>
+                                    </tr>
+                                </tbody>
+                                <!-- </th> -->
+                            </table>
+                        </div>
+                        <!--<input name="InOutFile" formControlName="InOutFile" class="form-control">-->
+                    </div>
+                    <!--Status-->
+                    <!--<div class="form-group">
+                        <label>Статус</label>
+                        <input name="Status" formControlName="Status" class="form-control">
+                    </div>-->
+                    <!--Path-->
+                    <!--<div class="form-group">
+                        <label>Путь</label>
+                        <input name="Path" formControlName="Path" class="form-control">
+                    </div>-->
+                    <button mat-raised-button color="accent" matStepperPrevious>Назад</button>
+                    <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+                    <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+                </form>
+                <!------>
+                <!--<form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Заполнение шаблона</ng-template>
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+                    </form>
+
+                    <div>
+                        <button mat-raised-button color="accent" matStepperPrevious>Назад</button>
+                        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+                        <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+                    </div>
+
+                </form>-->
+            </mat-step>
+        </mat-stepper>
+
+
+
+
+
+        <!--<button mat-raised-button color="warn" (click)="exit()">Закрыть</button>-->
+    </div>
+
+
+</div>

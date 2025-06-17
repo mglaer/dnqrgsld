@@ -1,0 +1,67 @@
+<title mat-dialog-title>
+    Настройка этапа</title>
+<br>
+<mat-form-field [formGroup]="form" class="example-full-width">
+    <mat-label>Краткое описание</mat-label>
+    <input class="form-control" minlenght=1 formControlName="short_title" matInput placeholder="Краткое описание" required>
+</mat-form-field>
+
+<br>
+
+
+<mat-form-field [formGroup]="form" appearance="fill">
+
+    <mat-label>Выбор дат</mat-label>
+    <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Дата начала" (input)="start">
+        <input matEndDate formControlName="end" placeholder="Дата окончания" (input)="end">
+    </mat-date-range-input>
+
+    <mat-hint>м/д/г – м/д/г</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+    <br>
+</mat-form-field>
+<hr>
+<br>
+<h2 style="padding-top: 2rem;">Стенд: {{choosed_entity.ShortTitle || "Не выбрано"}}</h2>
+<button [disabled]="choosed_entity_structure.ID === -1 || !loaded" (click)="openChooseEntity(); " class="mat-raised-button mat-primary ">Подобрать стенд</button>
+
+<br>
+<br>
+<br>
+<hr>
+<h2>Предметная область: {{choosed_entity_structure.ShortTitle || "Не выбрано"}}</h2>
+<mat-tree [dataSource]="dataSource " [treeControl]="treeControl ">
+    <mat-tree-node (click)="select(node) " *matTreeNodeDef="let node " matTreeNodePadding>
+        {{node.ShortTitle}}
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild " matTreeNodePadding>
+        <mat-icon matTreeNodeToggle class="mat-icon-rtl-mirror ">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+        {{node.ShortTitle}}
+    </mat-tree-node>
+</mat-tree>
+
+<br>
+
+<!--<mat-dialog-actions>
+    <mat-dialog-actions style="justify-content: flex-start;">
+        <button class="mat-raised-button mat-warn" (click)="close()">Закрыть</button>
+        <button class="mat-raised-button mat-primary" style="margin-left: 5px;" (click)="save()"
+            [disabled]="form.get('security_level').value.ID === -1 || form.get('short_title').value.length < 1 || form.get('executor').value.length < 1 || form.get('customer').value.length < 1 || form.get('description').value.length < 1 || !form.get('start').value || !form.get('end').value">
+            Сохранить
+        </button>
+    </mat-dialog-actions>
+    
+</mat-dialog-actions>
+!-->
+
+
+
+<mat-dialog-actions>
+    <button style="margin-right:5.5rem; " class="mat-raised-button " (click)="close() ">Закрыть</button>
+    <button class="mat-raised-button mat-primary " (click)="save()" [disabled]="choosed_entity_structure.ID === -1 || choosed_entity.ID === -1 || form.get('short_title').value.length < 1">Сохранить</button>
+</mat-dialog-actions>

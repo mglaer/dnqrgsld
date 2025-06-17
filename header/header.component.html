@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default justify-content-between" style="background-color: #D1DEDF;">
+
+  <a class="navbar-brand">
+    <img [src]="fullImagePath" >
+  </a>
+  <div>
+    <h1 style="color: #2D716D;">ПТН "Скорость"</h1>
+  </div>
+  <form class="form-inline">
+    {{user.Login}}
+    <button class="btn btn-outline-ligth my-2 my-sm-0" [routerLink]="['/login']">Выход</button>
+  </form>
+</nav>
+
+
+
+<!--
+  <nav class="navbar navbar-default justify-content-between" style="background-color: #D1DEDF;">
+    <a class="navbar-brand"><img [src]="fullImagePath"></a>
+    <div><h1 style="color: #2D716D;">ПТН "Скорость"</h1></div>
+    <form class="form-inline">
+      {{user.Login}}
+      <button class="btn btn-outline-ligth my-2 my-sm-0" [routerLink]="['/login']" >Выход</button>
+    </form>
+  </nav>
+-->

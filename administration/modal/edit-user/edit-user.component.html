@@ -1,0 +1,175 @@
+
+<form [formGroup]="user_edit_form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Редактировать пользователя</h2>
+                </div>
+                <div class="modal-body">
+                    <div style="min-height: 650px;max-height: 650px; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                        <mat-tab-group mat-align-tabs="start">
+                            <!-- #enddocregion align-start -->
+                            <mat-tab label="Данные профиля">
+                                <div class="form-group">
+                                    <label>Логин</label>
+                                    <input type="text" formControlName="Login" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Login'].errors }" />
+                                    <div *ngIf="submitted && f['Login'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['Login'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                        <div *ngIf="f['Login'].errors['pattern']">Допускаются только латинские буквы и
+                                            цифры
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Firstname -->
+                                <div class="form-group">
+                                    <label>Имя</label>
+                                    <input type="text" formControlName="FirstName" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['FirstName'].errors }" />
+                                    <div *ngIf="submitted && f['FirstName'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['FirstName'].errors?.['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Middlename-->
+                                <div class="form-group">
+                                    <label>Отчество</label>
+                                    <input type="text" formControlName="MiddleName" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['MiddleName'].errors }" />
+                                    <div *ngIf="submitted && f['MiddleName'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['MiddleName'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Lastname-->
+                                <div class="form-group">
+                                    <label>Фамилия</label>
+                                    <input type="text" formControlName="LastName" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['LastName'].errors }" />
+                                    <div *ngIf="submitted && f['LastName'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['LastName'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--mail-->
+                                <div class="form-group">
+                                    <label>Почта</label>
+                                    <input type="email" formControlName="Email" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Email'].errors }" />
+                                    <div *ngIf="submitted && f['Email'].errors" class="invalid-feedback">
+                                        <!--<div *ngIf="f['Email'].errors['required']">Поле не может быть пустым</div>-->
+                                        <div *ngIf="f['Email'].errors['pattern']">Неправильный формат e-mail
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Phone-->
+                                <div class="form-group">
+                                    <label>Телефон</label>
+                                    <input type="tel" formControlName="Phone" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Phone'].errors }" />
+                                    <div *ngIf="submitted && f['Phone'].errors" class="invalid-feedback">
+                                        <!--<div *ngIf="f['Phone'].errors['required']">Поле не может быть пустым</div>-->
+                                        <div *ngIf="f['Phone'].errors['pattern']">Неправильный формат телефона
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--SecurityLevel-->
+                                <div class="form-group">
+                                    <label>Уровень секретности</label>
+                                    <select class="form-control" (change)="changeLevel($event)"
+                                        formControlName="SecurityLevel">
+                                        <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                                            {{ level.ShortTitle }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!--Password-->
+                                <div class="form-group">
+                                    <label>Пароль</label>
+                                    <input type="password" formControlName="Password" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['Password'].errors }" />
+                                    <div *ngIf="submitted && f['Password'].errors" class="invalid-feedback">
+                                        <!--<div *ngIf="f['Password'].errors['required']">Поле не может быть пустым</div>-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Подтверждение пароля</label>
+                                    <input type="password" formControlName="password_confirm" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['password_confirm'].errors }" />
+
+                                    <div *ngIf="submitted && f['password_confirm'].errors" class="invalid-feedback">
+                                        <!--<div *ngIf="f['password_confirm'].errors?.['required']">Пароль не может быть пустым
+                                        </div>-->
+                                        <div *ngIf="f['password_confirm'].errors?.['mustMatch']">Пароли не совпадают
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </mat-tab>
+                            <mat-tab label="Членство в группах">
+
+                                <mat-form-field>
+                                    <mat-label>Filter</mat-label>
+                                    <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+                                </mat-form-field>
+
+                                <table mat-table matSort [dataSource]="dataSourceGroups" class="mat-elevation-z8">
+
+                                    <!-- ID Column -->
+                                    <ng-container matColumnDef="ID">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                                    </ng-container>
+
+                                    <!-- ShortTitle Column -->
+                                    <ng-container matColumnDef="ShortTitle">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Название</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+                                    </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </tr>
+                                </table>
+
+
+                                <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons>
+
+                                </mat-paginator>
+
+                            </mat-tab>
+                        </mat-tab-group>
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group" style="display: flex; justify-content: flex-start; width: 100%;">
+                        <button mat-button mat-dialog-close class="btn btn-danger">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-primary" style="margin-left: 10px;">Сохранить</button>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+</form>

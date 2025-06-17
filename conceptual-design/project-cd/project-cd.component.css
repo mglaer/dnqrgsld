@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+  }
+
+  .content {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mat-row:hover .mat-cell {
+    background-color: lightgray;
+    cursor: pointer;
+  }
+
+
+  .mat-list-item {
+    border-bottom: solid 1px lightgray;    
+}
+
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+}
+
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+}
+
+
+.flexExpand {
+  flex: 1 1 auto;
+}
+
+.flexSpaceBetween {
+  justify-content: space-between;
+}

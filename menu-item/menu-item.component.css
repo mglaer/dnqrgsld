@@ -1,0 +1,9 @@
+.sidenav_menu_item {
+    width: 255px;    
+    text-align: left;
+  }
+
+
+.flexExpand {
+  flex: 1 1 auto;
+}

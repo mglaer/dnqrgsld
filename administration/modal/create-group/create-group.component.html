@@ -1,0 +1,97 @@
+
+<form [formGroup]="group_edit_form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Создать группу</h2>
+                </div>
+                <div class="modal-body">
+                    <div style="min-height: 380;max-height: 380; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                        <mat-tab-group mat-align-tabs="start">
+                            <!-- #enddocregion align-start -->
+                            <mat-tab label="Данные группы">
+                                <div class="form-group">
+                                    <label>Название</label>
+                                    <input type="text" formControlName="ShortTitle" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                                    <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['ShortTitle'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Description-->
+                                <div class="form-group">
+                                    <label>Описание</label>
+                                    <!--<input type="text" formControlName="Description" class="form-control" />-->
+                                    <textarea name="Description" cols="40" rows="5" formControlName="Description"
+                                        class="form-control"></textarea>
+                                </div>
+
+                                <!--SecurityLevel-->
+                                <div class="form-group">
+                                    <label>Уровень секретности</label>
+                                    <select class="form-control" (change)="changeLevel($event)"
+                                        formControlName="SecurityLevel">
+                                        <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                                            {{ level.ShortTitle }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </mat-tab>
+                            
+                            <mat-tab label="Членство в группах">
+
+                                <mat-form-field>
+                                    <mat-label>Filter</mat-label>
+                                    <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+                                </mat-form-field>
+
+                                <table mat-table matSort [dataSource]="dataSourceGroups" class="mat-elevation-z8">
+
+                                    <!-- ID Column -->
+                                    <ng-container matColumnDef="ID">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                                    </ng-container>
+
+                                    <!-- ShortTitle Column -->
+                                    <ng-container matColumnDef="ShortTitle">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Название</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+                                    </ng-container>
+
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </tr>
+                                </table>
+
+
+                                <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons>
+
+                                </mat-paginator>
+
+                            </mat-tab>
+                        </mat-tab-group>
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group">
+                        <button mat-button mat-dialog-close class="btn btn-danger">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

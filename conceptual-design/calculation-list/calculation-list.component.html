@@ -1,0 +1,197 @@
+<div style="height: 94vh;">
+
+
+    <div style="width: 100%; height: 100%;">
+
+        <h1>
+            <mat-icon class="mat-icon-rtl-mirror">
+                calculate
+            </mat-icon>
+            Расчёты
+        </h1>
+
+        <hr>
+        <form [formGroup]="project_form" (ngSubmit)="onSubmit()" autocomplete="off">
+            <!--ShortTitle-->
+            <div class="form-group" class="row">
+                <div class="col-10">
+                    <label>Название</label>
+                    <input type="text" formControlName="ShortTitle" class="form-control">
+                </div>
+
+                <div class="col-2">
+                    <!--SecurityLevel-->
+                    <label>Уровень секретности</label>
+                    <select class="form-control" (change)="changeLevel($event)" formControlName="SecurityLevel">
+                        <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                            {{ level.ShortTitle }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!--Description-->
+            <div class="form-group">
+                <label>Описание</label>
+                <!--<input type="text" formControlName="Description" class="form-control" readonly>-->
+                <textarea name="Description" cols="40" rows="5" formControlName="Description"
+                    class="form-control"></textarea>
+            </div>
+            
+            <button mat-button type="submit" class="btn btn-primary">Сохранить</button>
+
+        </form>
+
+        <hr>
+
+        <mat-toolbar>
+            <span>
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+                    (click)="RefreshList()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </span>
+
+            <span>
+                <button mat-icon-button aria-label="Создать новый расчёт" (click)="FunctionCreateCalculation()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </span>
+
+        </mat-toolbar>
+
+        <div class="mat-elevation-z8">
+
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+            </mat-form-field>
+
+            <table mat-table matSort [dataSource]="dataSourceCalculation" class="mat-elevation-z8">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="ID">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                </ng-container>
+
+                <!-- ShortTitle Column -->
+                <ng-container matColumnDef="ShortTitle">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Название</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+                </ng-container>
+
+                <!-- Module Column -->
+                <ng-container matColumnDef="Module">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Модуль</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Module}} </td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Статус</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+                </ng-container>
+
+                <!-- Edit Column -->
+                <ng-container matColumnDef="Edit">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="FunctionEdit(element)" mat-button>
+                            <fa-icon [icon]="faPen" style="color: darkred;"></fa-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- View Column -->
+                <ng-container matColumnDef="View">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        <fa-icon [icon]="faEye"></fa-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="FunctionView(element)" mat-button>
+                            <fa-icon [icon]="faEye" style="color: darkred;"></fa-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Remove Column -->
+                <ng-container matColumnDef="Remove">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="FunctionRemove(element)" mat-button>
+                            <fa-icon [icon]="faTrash" style="color: darkred;"></fa-icon>
+                        </button>
+                </ng-container>
+
+                <!-- Launch Column -->
+                <ng-container matColumnDef="Launch">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        <fa-icon [icon]="faPlay"></fa-icon>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="FunctionLaunch(element)" mat-button>
+                            <fa-icon [icon]="faPlay" style="color: darkred;"></fa-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons>
+
+            </mat-paginator>
+
+        </div>
+
+        <button mat-raised-button color="warn" (click)="exit()">Назад</button>
+
+        <div *ngIf="selectedModuleId" class="module-files-section">
+            <button mat-raised-button color="accent" (click)="toggleModuleFiles()">
+              {{ showModuleFiles ? 'Скрыть файлы модуля' : 'Показать файлы модуля' }}
+            </button>
+            <div *ngIf="showModuleFiles">
+              <h3>Файлы расчётного модуля</h3>
+              <mat-table [dataSource]="moduleFiles" class="mat-elevation-z8">
+          
+                <!-- Имя файла -->
+                <ng-container matColumnDef="ShortTitle">
+                  <th mat-header-cell *matHeaderCellDef>Имя файла</th>
+                  <td mat-cell *matCellDef="let file"> {{ file.ShortTitle }} </td>
+                </ng-container>
+          
+                <!-- Действия -->
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef class="actions-header">Действия</th>
+                    <td mat-cell *matCellDef="let file" class="actions-cell">
+                      <button mat-icon-button 
+                              color="accent"
+                              (click)="downloadModuleFile(file)"
+                              [disabled]="isDownloading"
+                              class="download-button"
+                              matTooltip="Скачать файл"
+                              aria-label="Скачать файл">
+                        <mat-icon class="download-icon">
+                          {{ isDownloading ? 'hourglass_top' : 'cloud_download' }}
+                        </mat-icon>
+                        <span class="download-progress" *ngIf="isDownloading"></span>
+                      </button>
+                    </td>
+                  </ng-container>
+          
+                <tr mat-header-row *matHeaderRowDef="['ShortTitle', 'Actions']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['ShortTitle', 'Actions']"></tr>
+          
+              </mat-table>
+            </div>
+          </div>
+          
+
+    </div>
+</div>

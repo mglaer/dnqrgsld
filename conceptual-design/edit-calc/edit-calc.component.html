@@ -1,0 +1,66 @@
+<div style="height: 94vh;">
+
+
+    <div style="width: 100%; height: 100%;">
+        <h1>Редактировать расчёт</h1>
+        
+        <form [formGroup]="calc_form" (ngSubmit)="onSubmit()" autocomplete="off">
+            <!--ShortTitle-->
+            <div class="form-group" class="row">
+                <div class="col-10">
+                    <label>Название</label>
+                    <input type="text" formControlName="ShortTitle" class="form-control">
+                </div>
+
+                <div class="col-2">
+                    <label>Статус</label>
+                    <input name="Status" formControlName="Status" class="form-control" readonly>
+                </div>
+            </div>
+
+            <!--Description-->
+            <div class="form-group">
+                <label>Описание</label>
+                <!--<input type="text" formControlName="Description" class="form-control" readonly>-->
+                <textarea name="Description" cols="40" rows="5" formControlName="Description" class="form-control"></textarea>
+            </div>
+            <!--Module-->
+            <div class="form-group">
+                <label>Модуль</label>
+                <input name="Module" formControlName="Module" class="form-control" readonly>
+            </div>
+            <!--InOutFile-->
+            <div class="form-group">
+                <label>Данные</label>
+                <input class="form-control mb-5" type="file" class="upload"
+                            (change)="changeListener($event.target)">
+                <div class="scroll">
+                    <table class="table table-bordered">
+                        <!-- <th> -->
+                        <thead>
+                            <tr>
+                                <td class="text-center" *ngFor="let header of headers">
+                                    <b>{{header}}</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of records">
+                                <td class="text-center" *ngFor="let col of row">{{col}}</td>
+                            </tr>
+                        </tbody>
+                        <!-- </th> -->
+                    </table>
+                </div>
+            </div>
+        </form>
+        <!------>
+
+
+        <button mat-raised-button color="warn" (click)="exit()">Закрыть</button>
+        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+
+    </div>
+
+
+</div>

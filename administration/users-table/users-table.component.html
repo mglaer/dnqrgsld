@@ -1,0 +1,75 @@
+<h1>
+  <mat-icon class="mat-icon-rtl-mirror">
+    person
+</mat-icon>
+  Информация о пользователе
+</h1>
+
+<hr>
+
+<div class="mat-elevation-z8">
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+    </mat-form-field>
+  
+    <table mat-table matSort [dataSource]="dataSourceUser" class="mat-elevation-z8">
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+      </ng-container>
+  
+      <!-- login Column -->
+      <ng-container matColumnDef="Login">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Логин</th>
+        <td mat-cell *matCellDef="let element"> {{element.Login}} </td>
+      </ng-container>
+  
+      <!-- firstname Column -->
+      <ng-container matColumnDef="FirstName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Имя</th>
+        <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
+      </ng-container>
+  
+      <!-- middle Column -->
+      <ng-container matColumnDef="MiddleName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</th>
+        <td mat-cell *matCellDef="let element"> {{element.MiddleName}} </td>
+      </ng-container>
+  
+      <!-- lastname Column -->
+      <ng-container matColumnDef="LastName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</th>
+        <td mat-cell *matCellDef="let element"> {{element.LastName}} </td>
+      </ng-container>
+  
+      <!-- Security Level -->
+      <ng-container matColumnDef="SecurityLevel">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          <fa-icon [icon]="faShieldHalved"></fa-icon>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.SecurityLevel}} </td>
+      </ng-container> 
+  
+      <ng-container matColumnDef="ArchiveSign">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          <fa-icon [icon]="faBoxArchive"></fa-icon>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox disabled class="example-margin" [(ngModel)]="element.ArchiveSign" 
+            ></mat-checkbox>
+        </td>
+      </ng-container>
+ 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons>
+  
+    </mat-paginator>
+  
+  </div>
