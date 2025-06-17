@@ -1,0 +1,70 @@
+
+<mat-toolbar>
+    <span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="GetAll()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </span>
+
+    <span>
+        <button mat-icon-button aria-label="Example icon-button with a menu" [disabled]="parent_data===undefined"
+        (click)="FunctionCreateCsv()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </span>
+
+    <span class="flexExpand"></span>
+
+</mat-toolbar>
+
+<hr>
+
+
+<mat-accordion class="example-headers-align" multi>
+
+    <mat-expansion-panel *ngFor="let item of items_list">
+        <mat-expansion-panel-header class="right-aligned-header">
+
+          <mat-panel-title>
+                {{item.ID}}
+            </mat-panel-title>
+
+            <mat-panel-title>
+                {{item.ShortTitle}}
+            </mat-panel-title>
+
+            <mat-panel-description>
+                {{item.SecurityLevel}}
+            </mat-panel-description>
+
+            <span>
+                <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+                    (click)="FunctionShow(item)">
+                    <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+            </span>
+            
+            <span>
+                <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+                    (click)="FunctionEdit(item)">
+                    <fa-icon [icon]="faPen" ></fa-icon>
+                </button>
+            </span>
+            
+
+            <span>
+                <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+                    (click)="FunctionRemove(item)">
+                    <fa-icon [icon]="faTrash" style="color: darkred;"></fa-icon>
+                </button>
+            </span>
+            
+
+        </mat-expansion-panel-header>
+
+        {{item.Description}}
+
+    </mat-expansion-panel>
+
+
+</mat-accordion>

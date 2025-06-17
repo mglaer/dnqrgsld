@@ -1,0 +1,23 @@
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Вы хотите удалить запись {{data.ShortTitle}}?</h2>
+                </div>
+                <!--
+                <div class="modal-body">
+                    <div style="min-height: 380;max-height: 380; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                    </div>
+                </div>
+            -->
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group">
+                        <button mat-button mat-dialog-close class="btn btn-primary" (click)="onSubmit(false)">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-danger" (click)="onSubmit(true)">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

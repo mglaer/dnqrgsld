@@ -1,0 +1,82 @@
+<form [formGroup]="vtb_csv_form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Редактировать результат испытаний</h2>
+                </div>
+                <div class="modal-body">
+                    <div style="min-height: 380;max-height: 380; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                        <div class="form-group">
+                            <label>Название</label>
+                            <input type="text" formControlName="ShortTitle" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                            <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                <div *ngIf="f['ShortTitle'].errors['required']">Поле не может быть пустым
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Description-->
+                        <div class="form-group">
+                            <label>Описание</label>
+                            <!--<input type="text" formControlName="Description" class="form-control" />-->
+                            <textarea name="Description" cols="40" rows="5" formControlName="Description"
+                                class="form-control"></textarea>
+                        </div>
+
+                        <!--SecurityLevel-->
+                        <div class="form-group">
+                            <label>Уровень секретности</label>
+                            <select class="form-control" (change)="changeLevel($event)" formControlName="SecurityLevel">
+                                <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                                    {{ level.ShortTitle }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!--Content-->
+                        <div class="form-group">
+                            <label>Содержимое</label>
+                            <input class="form-control mb-5" type="file" class="upload"
+                                (change)="changeListener($event.target)">
+                            <!--<textarea name="Content" cols="40" rows="5" formControlName="Content"
+                                class="form-control"></textarea>-->
+                            <div class="scroll">
+                                <table class="table table-bordered">
+                                    <!-- <th> -->
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center" *ngFor="let header of headers">
+                                                <b>{{header}}</b>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of records">
+                                            <td class="text-center" *ngFor="let col of row">{{col}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <!-- </th> -->
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group">
+                        <button mat-button mat-dialog-close class="btn btn-danger">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,32 @@
+<div style="height: 94vh;">
+
+
+    <div style="width: 100%; height: 100%;">
+
+        <h1>{{Item.ShortTitle}}</h1>
+
+        <div class="row mt-3">
+            <table class="table table-bordered">
+                <!-- <th> -->
+                <thead>
+                    <tr>
+                        <td class="text-center" *ngFor="let header of headers">
+                            <b>{{header}}</b>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of records">
+                        <td class="text-center" *ngFor="let col of row">{{col}}</td>
+                    </tr>
+                </tbody>
+                <!-- </th> -->
+            </table>
+        </div>
+
+        <button mat-raised-button color="warn" (click)="exit()">Закрыть</button>
+
+    </div>
+
+
+</div>

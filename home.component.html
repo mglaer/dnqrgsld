@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default justify-content-between" style="background-color: #D1DEDF;">
+
+  <a class="navbar-brand">
+    <button mat-button (click)="sidenav.toggle()"><img [src]="fullImagePath"></button>
+  </a>
+  <div>
+    <h1 style="color: #2D716D;">ПТН "Скорость"</h1>
+  </div>
+  <form class="form-inline">
+    {{user.Login}}
+    <button class="btn btn-outline-ligth my-2 my-sm-0" (click)="Logout()">Выход</button>
+  </form>
+</nav>
+
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" class="example-sidenav" [fixedInViewport]="options.value.fixed" autosize
+    [fixedTopGap]="65" [fixedBottomGap]="options.value.bottom">
+
+    <div class="basic-container">
+
+
+      <span *ngFor="let item of navItems">
+        <span *ngIf="item.children && item.children.length > 0">
+          <button mat-raised-button [matMenuTriggerFor]="menu.childMenu" class="sidenav_menu_item">
+            {{item.ShortTitle}}
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <!--
+  (CloseSideMenuEvent)="sidenav.close()" 
+-->
+          <app-menu-item #menu [items]="item.children" (sidenav)="sidenav"></app-menu-item>
+
+          <!---->
+        </span>
+        <span *ngIf="!item.children || item.children.length === 0">
+          <button mat-button class="sidenav_menu_item">
+            {{item.ShortTitle}}
+          </button>
+        </span>
+      </span>
+    </div>
+
+  </mat-sidenav>
+
+
+<router-outlet></router-outlet>
+</mat-sidenav-container>
+<!------------------------------------------------------------------->
