@@ -1,0 +1,31 @@
+<div class="project-form" style="max-width: 400px; margin: 1rem auto; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h3 *ngIf="!project?.id">Создание проекта</h3>
+    <h3 *ngIf="project?.id">Редактирование проекта</h3>
+  
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Краткое наименование</mat-label>
+        <input matInput type="text" name="shortName" [(ngModel)]="formData.shortName" required />
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Описание</mat-label>
+        <textarea matInput name="description" [(ngModel)]="formData.description"></textarea>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Уровень секретности</mat-label>
+        <mat-select name="securityLevel" [(ngModel)]="formData.securityLevel">
+          <mat-option value="low">Низкий</mat-option>
+          <mat-option value="medium">Средний</mat-option>
+          <mat-option value="high">Высокий</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <div class="buttons" style="display: flex; justify-content: space-between; margin-top: 1rem;">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Сохранить</button>
+        <button mat-button type="button" (click)="closeDialog()">Отмена</button>
+      </div>
+    </form>
+  </div>
+  
