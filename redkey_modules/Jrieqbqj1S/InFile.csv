@@ -1,0 +1,3 @@
+Plane_type;Flight_mass_max;Kolvo_pass;Mass_pn;Flight_range;Flight_speed_cruis;Engines_number;Thrust_ratio;Engine_dry_weight;Flight_duration;Engine_thrust;Power_required;Dry_weight_ap;Fuel_required;Inacflight_mass
+1;79000;0;24000;5400;840;2;0,32;2303;6,92;12640;9187;2303;21961;127,16119
+0;79000;14;1729;5400;840;2;0,32;2303;6,92;12640;9187;2303;21961;2771,306037
