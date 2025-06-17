@@ -1,0 +1,97 @@
+<div style="height: 94vh; background-color: aliceblue;">
+  <div style="width: 100%; height: 100%;">
+    <h1>Редактировать сущность</h1>
+
+    <mat-form-field appearance="fill" class="full-width-field">
+      <mat-label>Базовый шаблон</mat-label>
+      <input matInput [value]="selected_template.ShortTitle" readonly>
+    </mat-form-field>
+
+    <div class="row">
+      <div class="col-10">
+        <form [formGroup]="form">
+          <formly-form [model]="model_header" [fields]="fields" [options]="options" [form]="form"></formly-form>
+        </form>
+      </div>
+
+      <div class="col-2">
+        <div class="main-image-container" (click)="show_full()">
+          <img id="preview" [src]="img_path" alt="Главное изображение">
+          <div class="overlay-buttons">
+            <button mat-mini-fab color="primary" class="edit-image-btn" (click)="mainImageInput.click(); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab color="warn" class="delete-image-btn" (click)="removeMainImage(); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <input type="file" #mainImageInput style="display: none;" accept="image/*" (change)="onMainImageSelected($event)">
+      </div>  
+    </div>
+
+    <div *ngIf="selected_template && fields && fields_body">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Знания">
+          <form [formGroup]="form_body">
+            <formly-form [model]="model_body" [fields]="fields_body" [options]="options_body" [form]="form_body"></formly-form>
+          </form>
+        </mat-tab>
+
+        <mat-tab label="Управление файлами">
+          <div class="file-management-section">
+            <h2>Управление файлами</h2>
+            <div class="upload-section">
+              <button mat-raised-button color="primary" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+                Выберите файл
+              </button>
+              <span *ngIf="selectedFileName">{{ selectedFileName }}</span>
+              <mat-form-field class="upload-field" appearance="fill">
+                <mat-label>Отображаемое имя</mat-label>
+                <input matInput [(ngModel)]="shortTitle" placeholder="Введите имя файла" name="shortTitle" />
+              </mat-form-field>
+              <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!selectedFile">
+                <mat-icon>cloud_upload</mat-icon>
+                Загрузить
+              </button>
+              <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
+            </div>
+
+            <table mat-table [dataSource]="dataSourceFiles" class="mat-elevation-z8">
+              <ng-container matColumnDef="ShortTitle">
+                <th mat-header-cell *matHeaderCellDef>Имя файла</th>
+                <td mat-cell *matCellDef="let file">
+                  <mat-icon color="accent">insert_drive_file</mat-icon>
+                  {{ file.ShortTitle }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Действия</th>
+                <td mat-cell *matCellDef="let file">
+                  <button mat-icon-button color="primary" (click)="downloadFile(file.ID, file.ShortTitle, file.URL)" matTooltip="Скачать">
+                    <mat-icon>cloud_download</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteFile(file.ID)" matTooltip="Удалить">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedFileColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedFileColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+            <div *ngIf="files.length === 0" class="no-files">
+              <p>Файлы отсутствуют.</p>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+      <button mat-raised-button color="warn" (click)="exit()" style="margin-left: 10px;">Отмена</button>
+    </div>
+  </div>
+</div>

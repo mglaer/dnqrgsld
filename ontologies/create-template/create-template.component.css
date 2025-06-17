@@ -1,0 +1,22 @@
+table {
+  width: 100%;
+}
+
+.content {
+  display: block;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-row:hover .mat-cell {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+
+:host ::ng-deep json-editor,
+:host ::ng-deep json-editor .jsoneditor,
+:host ::ng-deep json-editor>div,
+:host ::ng-deep json-editor jsoneditor-outer {
+  height: 500px;
+}

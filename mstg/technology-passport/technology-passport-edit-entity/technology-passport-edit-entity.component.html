@@ -1,0 +1,23 @@
+<div style="height: 94vh;background-color: aliceblue;">
+    <div style="width: 100%; height: 100%;">
+
+        <h1>Редактировать паспорт технологии</h1>
+
+        <mat-form-field appearance="fill" class="full-width-field">
+            <mat-label>Базовый шаблон</mat-label>
+            <input matInput [value]="selected_template.ShortTitle" readonly>
+        </mat-form-field>
+
+        <div>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+            </form>    
+        </div>
+
+        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+        <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+ <!--  
+        <button mat-raised-button color="accent" (click)="upload_image()">Image</button>
+ -->
+    </div>
+</div>

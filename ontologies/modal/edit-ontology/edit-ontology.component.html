@@ -1,0 +1,67 @@
+
+<form [formGroup]="ontology_edit_form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Редактировать структуру</h2>
+                </div>
+                <div class="modal-body">
+                    <div style="min-height: 350px;max-height: 350px; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                        <mat-tab-group mat-align-tabs="start">
+                            <!-- #enddocregion align-start -->
+                            <mat-tab label="Данные профиля">
+
+                                <!--ShortTitle-->
+                                <div class="form-group">
+                                    <label>Название</label>
+                                    <input type="text" formControlName="ShortTitle" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                                    <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['ShortTitle'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Description-->
+                                <div class="form-group">
+                                    <label>Описание</label>
+                                    <!--<input type="text" formControlName="Description" class="form-control" />-->
+                                    <textarea name="Description" cols="40" rows="5" formControlName="Description"  class="form-control"></textarea>
+                                </div>
+
+                                <!--SecurityLevel-->
+                                <div class="form-group">
+                                    <label>Уровень секретности</label>
+                                    <select class="form-control" (change)="changeLevel($event)"
+                                        formControlName="SecurityLevel">
+                                        <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                                            {{ level.ShortTitle }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </mat-tab>
+                            <mat-tab label="Дополнительно">
+
+                            </mat-tab>
+                        </mat-tab-group>
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group" style="display: flex; justify-content: flex-start; width: 100%;">
+                        <button mat-button mat-dialog-close class="btn btn-danger" style="margin-right: 10px;">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,44 @@
+<div style="height: 94vh;background-color: aliceblue;">
+    <div style="width: 100%; height: 100%;">
+
+        <h1>Создать шаблон</h1>
+
+        <div class="row">
+            <div class="col-10">
+                <div>
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <formly-form [model]="model_header" [fields]="fields" [options]="options" [form]="form"></formly-form>
+                        <!--<button type="submit" class="btn btn-primary submit-button" (click)="exit()">Закрыть</button>-->
+                    </form>            
+                </div>
+            </div>
+
+            <div class="col-2" (click)="show_full()">
+                <img id="preview" src="{{ img_path }}" style="object-fit: cover;max-width: 95%; max-height: 95%; background-color:gray;cursor: zoom-in;">                
+            </div>
+
+        </div>
+       
+
+        <!-------------------------------------->
+        <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab #OpenContentTab label="Тактико-технические характеристики">
+                <json-editor [options]="editorOptionsOpen" [data]="initialDataOpen" (change)="showJsonOpen($event)">
+                </json-editor> -->
+                <!--<div>{{ visibleDataOpen | json }}</div>-->
+
+            <!-- </mat-tab>
+
+            <mat-tab #PrivateContentTab label="Особенности реализации">
+                <json-editor [options]="editorOptionsPrivate" [data]="initialDataPrivate"
+                    (change)="showJsonPrivate($event)"></json-editor> -->
+                <!--<div>{{ visibleDataPrivate | json }}</div>-->
+
+            <!-- </mat-tab>
+        </mat-tab-group> -->
+        <!-------------------------------------->
+        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+        <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+
+    </div>
+</div>

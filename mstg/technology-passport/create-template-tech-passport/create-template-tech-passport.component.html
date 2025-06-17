@@ -1,0 +1,18 @@
+<div style="height: 94vh;background-color: aliceblue;">
+    <div style="width: 100%; height: 100%;">
+
+        <h1>Создать шаблон паспорта технологии</h1>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+            <!--<button type="submit" class="btn btn-primary submit-button" (click)="exit()">Закрыть</button>-->
+        </form>
+        <!-------------------------------------->
+        <json-editor [options]="editorOptions" [data]="initialData" (change)="showJson($event)">
+        </json-editor>        
+        <!-------------------------------------->
+        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+        <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+
+    </div>
+</div>

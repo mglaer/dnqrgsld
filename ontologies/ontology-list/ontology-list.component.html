@@ -1,0 +1,108 @@
+<h1>
+    <fa-icon [icon]="faGem"></fa-icon>Онтология
+</h1>
+
+<mat-toolbar>
+    <span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="GetAll()" matTooltip="Обновить содержимое страницы">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </span>
+    
+
+    <span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" [disabled]="parent_data===undefined" matTooltip="Добавить содержимое страницы">
+            <mat-icon>add</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="FunctionCreateStructure()">
+                <fa-icon [icon]="faGem"></fa-icon>
+                <span style="margin-left: 10px;">Структура</span>
+              </button>
+              <button mat-menu-item [disabled]="selected_view_mode.TypeElement==='Template'" (click)="FunctionCreateEntity()">
+                <fa-icon [icon]="faJetFighter"></fa-icon>
+                <span style="margin-left: 10px;">Сущность</span>
+              </button>
+              <button mat-menu-item [disabled]="selected_view_mode.TypeElement!='Template'" (click)="FunctionCreateTemplate()">
+                <fa-icon [icon]="faFile"></fa-icon>
+                <span style="margin-left: 10px;">Шаблон</span>
+              </button>
+        </mat-menu>
+    </span>
+
+    <span class="flexExpand"></span>
+
+    <span>
+        <h3>Отображать:</h3>
+    </span>
+    <span>
+        <mat-select [(ngModel)]="selected_view_mode" name="view_mode" (selectionChange)="change_view_mode($event)">
+            <mat-option *ngFor="let mode of view_modes" [value]="mode">
+                {{mode.ShortTitle}}
+            </mat-option>
+        </mat-select>
+
+    </span>
+
+    <span>
+        <mat-slide-toggle class="example-margin" [(ngModel)]="show_archieved" (change)="GetAll()">Показать архивные
+        </mat-slide-toggle>
+    </span>
+
+</mat-toolbar>
+
+<hr>
+
+
+<mat-accordion class="example-headers-align" multi>
+
+
+
+    <mat-expansion-panel *ngFor="let item of ontology_list">
+        <mat-expansion-panel-header class="right-aligned-header">
+
+            <mat-panel-title *ngIf="item.TypeElement === 'Structure'">
+                <fa-icon [icon]="faGem"></fa-icon>
+            </mat-panel-title>
+
+            <mat-panel-title *ngIf="item.TypeElement === 'Entity'">
+                <fa-icon [icon]="faJetFighter"></fa-icon>
+            </mat-panel-title>
+
+            <mat-panel-title *ngIf="item.TypeElement === 'Template'">
+                <fa-icon [icon]="faFile"></fa-icon>
+            </mat-panel-title>
+
+          <mat-panel-title>
+                {{item.ID}}
+            </mat-panel-title>
+
+            <mat-panel-title>
+                {{item.ShortTitle}}
+            </mat-panel-title>
+
+            <mat-panel-description>
+                {{item.SecurityLevel}}
+            </mat-panel-description>
+
+            <span style="display: block; margin-top: 15px;" matTooltip="Архивировать элемент">
+                <mat-checkbox class="example-margin" [(ngModel)]="item.ArchiveSign" (change)="FunctionChangeActive(item)"></mat-checkbox>
+            </span>
+    
+            <span style="display: block; margin-top: 10px;" matTooltip="Редактировать элемент">
+                <button mat-button class="example-icon" aria-label="Edit icon-button with menu icon" (click)="FunctionEdit(item)"
+                        style="font-size: 16px; color: darkred; margin-top: -3px;">
+                    <i class="material-icons" style="font-size: 18px;">edit</i>
+                </button>
+            </span>
+
+            
+        </mat-expansion-panel-header>
+
+        {{item.Description}}
+
+    </mat-expansion-panel>
+
+
+</mat-accordion>

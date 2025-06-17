@@ -1,0 +1,18 @@
+.full-width-field {
+    width: 100%;
+ }
+
+ .layer1 {
+    background: #008B66; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 10px; /* Поля вокруг текста */
+    margin-bottom: -7px; /* Отступ снизу */
+    font-size: 1.1em; /* Размер шрифта */
+   }
+   .layer2 {
+    /*margin-left: 30px;  Отступ слева */
+    background: #dfe6e1; /* Цвет фона */
+   /*  padding: 10px; Поля вокруг текста */
+    border: 1px solid #fff; /* Параметры рамки */
+    border-right: none; /* Убираем линию справа */
+   }

@@ -1,0 +1,113 @@
+<div style="height: 94vh;background-color: aliceblue;">
+    <div style="width: 100%; height: 100%;">
+
+        <h1>Создать сущность</h1>
+
+        <mat-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+                
+                <!---->
+                <mat-toolbar>
+                    <span class="full-width-field">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Выбор шаблона</ng-template>
+                            <mat-form-field appearance="fill" class="full-width-field">
+                                <input matInput formControlName="selected_template" placeholder="Выберите из списка" required
+                                    readonly>                         
+                            </mat-form-field>
+                        </form>        
+                    </span>
+                    <span class="flexExpand"></span>                    
+                    <span>
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="show_archieved" (change)="GetTemplateList()">
+                            Показать архивные
+                        </mat-slide-toggle>
+                    </span>
+                </mat-toolbar>
+                <!---->
+                <table mat-table matSort [dataSource]="DataSourceTable" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="ID">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ShortTitle">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Название</th>
+                        <td mat-cell *matCellDef="let element"> {{element.ShortTitle}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Description">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Описание</th>
+                        <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SecurityLevel">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            <fa-icon [icon]="faShieldHalved"></fa-icon>
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.SecurityLevel}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ArchiveSign">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            <fa-icon [icon]="faBoxArchive"></fa-icon>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox disabled class="example-margin" [(ngModel)]="element.ArchiveSign">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div>
+                    <button mat-raised-button color="warn"  (click)="exit()">Отмена</button>
+                    <button mat-raised-button color="primary"  matStepperNext [disabled]="selected_template===undefined">Далее</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+                <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Заполнение шаблона</ng-template>
+
+
+                    <div class="row">
+                        <div class="col-10">
+                            <div>
+                                <form [formGroup]="form" (ngSubmit)="submit()">
+                                    <formly-form [model]="model_header" [fields]="fields" [options]="options" [form]="form"></formly-form>
+                                </form>    
+                            </div>
+                        </div>
+            
+                        <div class="col-2" (click)="show_full()">
+                            <img id="preview" src="{{ img_path }}" style="object-fit: cover;max-width: 95%; max-height: 95%; background-color:gray;cursor: zoom-in;">                
+                        </div>
+            
+                    </div>
+            
+                    <div>
+                        <form [formGroup]="form_body" (ngSubmit)="submit()">
+                            <formly-form [model]="model_body" [fields]="fields_body" [options]="options_body" [form]="form_body" ></formly-form>
+                        </form>    
+                    </div>
+
+                    <!--<form [formGroup]="form" (ngSubmit)="submit()">
+                        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+                    </form>-->
+
+
+
+                    <div>
+                        <button mat-raised-button color="accent" matStepperPrevious>Назад</button>
+                        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+                        <button mat-raised-button color="warn" (click)="exit()">Отмена</button>
+                    </div>
+
+                </form>
+            </mat-step>
+        </mat-stepper>
+
+    </div>
+</div>

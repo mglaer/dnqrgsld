@@ -1,0 +1,79 @@
+<form [formGroup]="ontology_create_form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div style="align-items: center;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Создать структуру</h2>
+                </div>
+                <div class="modal-body">
+                    
+                    <div style="min-height: 420px;max-height: 420px; max-width: 430px; padding: 15px; margin: 0 auto;">
+
+                        <mat-tab-group mat-align-tabs="start">
+                            <!-- #enddocregion align-start -->
+                            <mat-tab label="Данные">
+
+                                <!--TypeElement
+                                <div class="form-group">
+                                    <label>Тип сущности</label>
+                                    <select class="form-control" (change)="changeType($event)"
+                                        formControlName="TypeElement">
+                                        <option *ngFor="let typeel of type_elements" [ngValue]="typeel.ShortTitle">
+                                            {{ typeel.ShortTitle }}
+                                        </option>
+                                    </select>
+                                </div>-->
+
+                                <!--ShortTitle-->
+                                <div class="form-group">
+                                    <label>Название</label>
+                                    <input type="text" formControlName="ShortTitle" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                                    <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['ShortTitle'].errors['required']">Поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Description-->
+                                <div class="form-group">
+                                    <label>Описание</label>
+                                    <!--<input type="text" formControlName="Description" class="form-control" />-->
+                                    <textarea name="Description" cols="40" rows="5" formControlName="Description"
+                                        class="form-control"></textarea>
+                                </div>
+
+                                <!--SecurityLevel-->
+                                <div class="form-group">
+                                    <label>Уровень секретности</label>
+                                    <select class="form-control" (change)="changeLevel($event)"
+                                        formControlName="SecurityLevel">
+                                        <option *ngFor="let level of security_data" [ngValue]="level.ShortTitle">
+                                            {{ level.ShortTitle }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </mat-tab>
+                            <mat-tab label="Дополнительно" disabled>
+
+                            </mat-tab>
+                        </mat-tab-group>
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer" style="align-items: center;">
+                    <div class="form-group">
+                        <button mat-button mat-dialog-close class="btn btn-danger">Отмена</button>
+                        <button mat-button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,221 @@
+<div style="height: 94vh;background-color: aliceblue;">
+    <div style="width: 100%; height: 100%;">
+
+        <h1>Создать паспорт КНТП</h1>
+
+
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab label="Общие положения">
+                <!------>
+                <form [formGroup]="passport_common_form" (ngSubmit)="onSubmit()" autocomplete="off">
+                    <!--ShortTitle-->
+                    <div class="form-group">
+                        <label>Название</label>
+                        <input type="text" formControlName="ShortTitle" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                        <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                            <div *ngIf="f['ShortTitle'].errors['required']">Поле не может быть пустым
+                            </div>
+                        </div>
+                    </div>
+                    <!--Goal-->
+                    <div class="form-group">
+                        <label>Цель КНТП</label>
+                        <input name="Goal" formControlName="Goal" class="form-control">
+                        <div *ngIf="submitted && f['Goal'].errors" class="invalid-feedback">
+                            <div *ngIf="f['Goal'].errors['required']">Поле не может быть пустым
+                            </div>
+                        </div>
+                    </div>
+                    <!--Type-->
+                    <div class="form-group">
+                        <label>Тип КНТП</label>
+                        <!--<input type="text" formControlName="Type" class="form-control" />-->
+                        <input name="Type" formControlName="Type" class="form-control">
+                    </div>
+                    <!--SecurityLevel-->
+                    <div class="form-group">
+                        <label>Уровень секретности</label>
+                        <select class="form-control" (change)="changeLevel($event)" formControlName="SecurityLevel">
+                            <option *ngFor="let level of security_data" [ngValue]="level.Level">
+                                {{ level.ShortTitle }}
+                            </option>
+                        </select>
+                    </div>
+                    <!--DateInitiation-->
+                    <div class="form-group">
+                        <label>Дата инициации КНТП</label>
+                        <!--<input name="DateInitiation" matInput formControlName="DateInitiation"
+                            [matDatepicker]="picker_initiation_date" placeholder="{{'datePlaceholder' | translate}}">-->
+                        <input name="DateInitiation" matInput formControlName="DateInitiation"
+                            [matDatepicker]="picker_initiation_date" placeholder="Дата">
+                        <mat-datepicker-toggle matSuffix [for]="picker_initiation_date"></mat-datepicker-toggle>
+                        <mat-datepicker #picker_initiation_date>{{date_init}}</mat-datepicker>
+                        <div *ngIf="submitted && f['DateInitiation'].errors" class="invalid-feedback">
+                            <div *ngIf="f['DateInitiation'].errors['required']">Поле не может быть пустым
+                            </div>
+                        </div>
+                    </div>
+                    <!--Document-->
+                    <div class="form-group">
+                        <label>Распорядительные документы</label>
+                        <textarea name="Document" cols="40" rows="2" formControlName="Document"
+                            class="form-control"></textarea>
+                    </div>
+                    <!--Members-->
+                    <div class="form-group">
+                        <label>Основные участники проекта</label>
+                        <textarea name="Members" cols="40" rows="2" formControlName="Members"
+                            class="form-control"></textarea>
+                    </div>
+                    <!--StartDate -->
+                    <div class="form-group">
+                        <label>Сроки реализации КНТП</label>
+                        <span>
+                            <input name="StartDate" matInput formControlName="StartDate"
+                                [matDatepicker]="picker_start_date" placeholder="Начало">
+                            <mat-datepicker-toggle matSuffix [for]="picker_start_date"></mat-datepicker-toggle>
+                            <mat-datepicker #picker_start_date></mat-datepicker>
+                            <div *ngIf="submitted && f['StartDate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['StartDate'].errors['required']">Поле не может быть пустым
+                                </div>
+                            </div>
+                        </span>
+
+                        <span>
+                            ...
+                        </span>
+
+                        <span>
+                            <input name="EndDate" matInput formControlName="EndDate" [matDatepicker]="picker_end_date"
+                                placeholder="Завершение">
+                            <mat-datepicker-toggle matSuffix [for]="picker_end_date"></mat-datepicker-toggle>
+                            <mat-datepicker #picker_end_date></mat-datepicker>
+                            <div *ngIf="submitted && f['EndDate'].errors" class="invalid-feedback">
+                                <div *ngIf="f['EndDate'].errors['required']">Поле не может быть пустым
+                                </div>
+                            </div>
+                        </span>
+
+                    </div>
+
+                    <!--EndDate--
+                    <div class="form-group">
+                        <input name="EndDate" matInput formControlName="EndDate" [matDatepicker]="picker_end_date" placeholder="{{'datePlaceholder' | translate}}">
+                        <mat-datepicker-toggle matSuffix [for]="picker_end_date"></mat-datepicker-toggle>
+                        <mat-datepicker #picker_end_date></mat-datepicker>
+                    </div>-->
+
+                    <!--Costs-->
+                    <div class="form-group">
+                        <label>Costs</label>
+                        <input name="Costs" type="number" formControlName="Costs" class="form-control">
+                    </div>
+                </form>
+                <!------>
+            </mat-tab>
+            <mat-tab label="Целевые характеристики">
+
+                <div class="mat-elevation-z8">
+                    <!---------------->
+                    <!--<mat-toolbar>
+                        <span>
+                            <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+                                (click)="GetAll()">
+                                <mat-icon>refresh</mat-icon>
+                            </button>
+                        </span>
+
+                        <span>
+                            <button mat-icon-button aria-label="Example icon-button with a menu" (click)="AddTargeted">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </span>
+
+                        <span class="flexExpand"></span>
+
+                        <span>
+
+                        </span>
+
+
+                    </mat-toolbar>-->
+
+<!--
+                    <form [formGroup]="targeted_form" (ngSubmit)="onSubmitAdd()" autocomplete="off" class="inline">
+
+                        <mat-form-field appearance="fill" class="inline">
+                            <mat-label>Тип</mat-label>
+                            <mat-select (change)="changeType($event)" formControlName="TypeTargeted">
+                                <mat-option *ngFor="let type of type_targeted" [value]="type.Name">
+                                    {{ type.Name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill" class="inline">
+                            <mat-label>Тип</mat-label>
+                            <mat-select (change)="changeType($event)" formControlName="TypeTargeted">
+                                <mat-option *ngFor="let type of type_targeted" [value]="type.Name">
+                                    {{ type.Name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+                        <div class="form-group">
+                            <span>
+                                <label>Тип</label>
+                                <select (change)="changeType($event)" class="form-control"
+                                    formControlName="TypeTargeted">
+                                    <option *ngFor="let type of type_targeted" [ngValue]="type.Name">
+                                        {{ type.Name }}
+                                    </option>
+                                </select>
+                            </span>
+
+                            <span>
+                                <label>Название</label>
+                                <input type="text" formControlName="ShortTitle" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                                <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['ShortTitle'].errors['required']">Поле
+                                        не может быть пустым
+                                    </div>
+                                </div>
+                            </span>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Значение</label>
+                            <input type="text" formControlName="ShortTitle" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f['ShortTitle'].errors }" />
+                            <div *ngIf="submitted && f['ShortTitle'].errors" class="invalid-feedback">
+                                <div *ngIf="f['ShortTitle'].errors['required']">Поле
+                                    не может быть пустым
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                -->
+
+                </div>
+                <!-------------------->
+            </mat-tab>
+            <mat-tab label="Реестр технологий, входящих в КНТП">
+                
+            </mat-tab>
+        </mat-tab-group>
+
+
+        <div style="display: flex;">
+            <button mat-raised-button color="primary" (click)="save()" style="margin-right: 5px;">Сохранить</button>
+            <button mat-raised-button color="warn" (click)="exit()" style="margin-left: 5px;">Отмена</button>
+        </div>
+        
+    </div>
+</div>
